@@ -1,13 +1,15 @@
 <?php
 
-namespace Modules\User\Database\Seeders;
+namespace Modules\Permission\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Menu;
+use Modules\Admin\Models\MenuItem;
 
 class MenuTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -20,31 +22,50 @@ class MenuTableSeeder extends Seeder
         $menus = [
             'leftAdminMenu' => [
                 [
-                    'name'   => 'Roles',
-                    'icon'   => 'ion-briefcase',
-                    'type'   => 'route',
-                    'value'  => 'permission::role.index',
-                    'module' => 'Permission'
-                ],
-                [
-                    'name'   => 'Permissions',
-                    'icon'   => 'ion-android-unlock',
-                    'type'   => 'route',
-                    'value'  => 'permission::permission.index',
-                    'module' => 'Permission'
+                    'name'      => 'Permissions',
+                    'icon'      => 'ion-android-unlock',
+                    'type'      => 'url',
+                    'value'     => '#',
+                    'module'    => 'Permission',
+                    'is_active' => 1,
+                    'children'  => [
+                        [
+                            'name'            => 'Roles',
+                            'type'            => 'route',
+                            'value'           => 'admin::permission.roles.index',
+                            'active_resolver' => 'admin::permission.roles.*',
+                            'module'          => 'Permission',
+                            'is_active'       => 1
+                        ],
+                        [
+                            'name'            => 'Levels',
+                            'type'            => 'route',
+                            'value'           => 'admin::permission.levels.index',
+                            'active_resolver' => 'admin::permission.levels.*',
+                            'module'          => 'Permission',
+                            'is_active'       => 1
+                        ],
+                    ]
                 ],
             ]
         ];
 
-        foreach( $menus as $name => $items ) {
+        foreach ($menus as $name => $items) {
             $menu = Menu::firstOrCreate([
                 'name' => $name
             ]);
 
-            foreach( $items as $item ){
-                $i = $menu->items()->firstOrCreate($item);
-                $i->is_active = 1;
-                $i->save();
+
+            foreach ($items as $item) {
+                $item['menu_id'] = $menu->id;
+                $parentItem = MenuItem::firstOrCreate(array_except($item, 'children'));
+
+                foreach($item['children'] as $child) {
+                    $child['parent_id'] = $parentItem->id;
+                    $child['menu_id'] = $menu->id;
+
+                    MenuItem::firstOrCreate($child);
+                }
             }
         }
     }

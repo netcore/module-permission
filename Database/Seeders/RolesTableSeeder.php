@@ -18,12 +18,16 @@ class RolesTableSeeder extends Seeder
         Model::unguard();
 
         $roles = [
-            'admin',
-            'user'
+            'Admin',
+            'User',
+            'Moderator',
+            'Spectator',
         ];
 
         foreach( $roles as $roleName ){
-            Role::firstOrCreate(['name' => $roleName]);
+            Role::firstOrCreate([
+                'name' => $roleName,
+            ]);
         }
     }
 }
