@@ -22,20 +22,22 @@ class MenuTableSeeder extends Seeder
         $menus = [
             'leftAdminMenu' => [
                 [
-                    'name'      => 'Permissions',
-                    'icon'      => 'ion-android-unlock',
-                    'type'      => 'url',
-                    'value'     => '#',
-                    'module'    => 'Permission',
-                    'is_active' => 1,
-                    'children'  => [
+                    'name'       => 'Permissions',
+                    'icon'       => 'ion-android-unlock',
+                    'type'       => 'url',
+                    'value'      => '#',
+                    'module'     => 'Permission',
+                    'is_active'  => 1,
+                    'parameters' => json_encode([]),
+                    'children'   => [
                         [
                             'name'            => 'Roles',
                             'type'            => 'route',
                             'value'           => 'admin::permission.roles.index',
                             'active_resolver' => 'admin::permission.roles.*',
                             'module'          => 'Permission',
-                            'is_active'       => 1
+                            'is_active'       => 1,
+                            'parameters'      => json_encode([])
                         ],
                         [
                             'name'            => 'Levels',
@@ -43,7 +45,8 @@ class MenuTableSeeder extends Seeder
                             'value'           => 'admin::permission.levels.index',
                             'active_resolver' => 'admin::permission.levels.*',
                             'module'          => 'Permission',
-                            'is_active'       => 1
+                            'is_active'       => 1,
+                            'parameters'      => json_encode([])
                         ],
                     ]
                 ],
