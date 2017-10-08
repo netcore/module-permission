@@ -5,6 +5,7 @@ namespace Modules\Permission\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Permission\Http\Requests\CreateRoleRequest;
 use Modules\Permission\Models\Level;
 use Modules\Permission\Models\Role;
 
@@ -24,43 +25,29 @@ class RoleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
+     * Store a newly created role in database.
+     * @param CreateRoleRequest $request
+     * @return array
      */
-    public function create()
+    public function store(CreateRoleRequest $request)
     {
-        return view('permission::create');
+        $request->merge([
+            'is_active' => $request->get('is_active') ? 1 : 0
+        ]);
+
+        $role = Role::create($request->only(['name', 'is_active']));
+
+        $role->levels()->sync($request->get('levels', []));
+        $role->save();
+
+        return [
+            'message'  => 'Role has been succesfully created',
+            'redirect' => route('admin::permission.roles.index')
+        ];
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('permission::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('permission::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the specified role in storage.
      * @param  Request $request
      * @return Response
      */
@@ -85,7 +72,23 @@ class RoleController extends Controller
             Role::whereNotIn('id', array_keys($activeFields))->update(['is_active' => 0]);
         }
 
-        return redirect()->back()->withSuccess('Roles has been successfully modified!');
+        return [
+            'message'  => 'Roles has been successfully modified!',
+        ];
+
+    }
+
+    /**
+     * Remove the specified role from storage.
+     *
+     * @param Role $role
+     * @return array
+     */
+    public function destroy(Role $role)
+    {
+        $role->delete();
+
+        return ['state' => 'success'];
     }
 
     /**
@@ -110,13 +113,5 @@ class RoleController extends Controller
         return [
             'type' => 'success'
         ];
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
-    {
     }
 }

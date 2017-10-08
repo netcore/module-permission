@@ -6,9 +6,10 @@ Route::group([
     'middleware' => ['web', 'auth.admin'],
     'namespace'  => 'Modules\Permission\Http\Controllers\Admin'
 ], function () {
-    Route::resource('roles', 'RoleController', ['except' => [
-        'update'
+    Route::resource('roles', 'RoleController', ['only' => [
+        'index', 'destroy', 'store'
     ]]);
+
     Route::resource('levels', 'LevelController');
 
     Route::put('roles/update', [
