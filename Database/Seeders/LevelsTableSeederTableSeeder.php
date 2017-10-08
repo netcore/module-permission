@@ -5,6 +5,7 @@ namespace Modules\Permission\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Permission\Models\Level;
+use Modules\Permission\Models\Role;
 
 class LevelsTableSeederTableSeeder extends Seeder
 {
@@ -55,6 +56,9 @@ class LevelsTableSeederTableSeeder extends Seeder
                     $levelModel->routes()->create($route);
                 }
             }
+
+            $role = Role::whereName('Admin')->first();
+            $role->levels()->attach($levelModel);
         }
     }
 }
