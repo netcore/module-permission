@@ -22,28 +22,28 @@ class LevelsTableSeederTableSeeder extends Seeder
             [
                 'name' => 'Read',
                 'routes' => [
-                    ['route' => '.index'],
-                    ['route' => '.pagination'],
+                    ['route' => '*.index'],
+                    ['route' => '*.pagination'],
                 ]
             ],
             [
                 'name' => 'Write',
                 'routes' => [
-                    ['route' => '.create'],
-                    ['route' => '.store'],
+                    ['route' => '*.create'],
+                    ['route' => '*.store'],
                 ]
             ],
             [
                 'name' => 'Edit',
                 'routes' => [
-                    ['route' => '.edit'],
-                    ['route' => '.update'],
+                    ['route' => '*.edit'],
+                    ['route' => '*.update'],
                 ]
             ],
             [
                 'name' => 'Delete',
                 'routes' => [
-                    ['route' => '.destroy'],
+                    ['route' => '*.destroy'],
                 ]
             ],
             ['name' => 'Custom'],
