@@ -13,5 +13,5 @@ class LevelRoute extends Model
      */
     protected $table = 'netcore_permission__level_routes';
 
-    protected $fillable = ['route', 'url', 'level_id'];
+    protected $fillable = ['route', 'uri', 'level_id'];
 }

@@ -6,11 +6,21 @@ Route::group([
     'middleware' => ['web', 'auth.admin'],
     'namespace'  => 'Modules\Permission\Http\Controllers\Admin'
 ], function () {
-    Route::resource('roles', 'RoleController', ['only' => [
-        'index', 'destroy', 'store'
-    ]]);
+    Route::resource('roles', 'RoleController', [
+        'only' => [
+            'index',
+            'destroy',
+            'store'
+        ]
+    ]);
 
-    Route::resource('levels', 'LevelController');
+    Route::resource('levels', 'LevelController', [
+        'only' => [
+            'index',
+            'destroy',
+            'store'
+        ]
+    ]);
 
     Route::put('roles/update', [
         'uses' => 'RoleController@update',
@@ -21,4 +31,16 @@ Route::group([
         'uses' => 'RoleController@updateField',
         'as'   => 'roles.field.update'
     ]);
+
+    Route::post('routes/update', [
+            'uses' => 'LevelController@updateRoute',
+            'as'   => 'levels.route.update'
+        ]
+    );
+
+    Route::post('levels/update', [
+            'uses' => 'LevelController@modify',
+            'as'   => 'levels.modify'
+        ]
+    );
 });
