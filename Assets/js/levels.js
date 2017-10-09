@@ -12,11 +12,18 @@ $(function () {
     var successAlert = form.find('.alert-success');
     form.hide().removeClass('hidden').slideDown();
 
+    var routeList = [];
+    console.log();
+    $.each(routes, function (index, value) {
+        routeList.push(value);
+    });
+
     $('.js-cancel-button').on('click', function (e) {
         form.hide();
         $('.col-md-4 .panel-title').text('Create new level');
         e.preventDefault();
         form[0].reset();
+
         routeInput.select2({
             data: routeList,
             tags: true
@@ -29,10 +36,6 @@ $(function () {
         form.slideDown();
     });
 
-    var routeList = [];
-    $.each(routes, function (index, value) {
-        routeList.push(value);
-    });
     routeInput.select2({
         data: routeList,
         tags: true

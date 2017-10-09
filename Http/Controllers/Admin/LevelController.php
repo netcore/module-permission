@@ -22,7 +22,7 @@ class LevelController extends Controller
         $levels = Level::get();
 
         $routes = [];
-        $routes += [
+        $routes['Route Groups'] = [
             '*.index'      => '*.index',
             '*.pagination' => '*.pagination',
             '*.create'     => '*.create',
@@ -39,7 +39,7 @@ class LevelController extends Controller
                     if ($exploded[0] == 'debugbar') {
                         continue;
                     }
-                    $routes[$exploded[0] . '.*'] = $exploded[0] . '.*';
+                    $routes['Route Groups'][$exploded[0] . '.*'] = $exploded[0] . '.*';
                 }
             }
         }
@@ -50,7 +50,7 @@ class LevelController extends Controller
                 if (isset($exploded[0]) && $exploded[0] == 'debugbar') {
                     continue;
                 }
-                $routes[$route->getName()] = $route->getName();
+                $routes['All Routes'][$route->getName()] = $route->getName();
 
             }
         }
