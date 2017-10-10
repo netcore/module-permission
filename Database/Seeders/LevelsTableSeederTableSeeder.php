@@ -48,17 +48,19 @@ class LevelsTableSeederTableSeeder extends Seeder
             ],
             ['name' => 'Custom'],
         ];
+        $ids = [];
         foreach($levels as $level) {
             $levelModel = Level::firstOrCreate(array_only($level, 'name'));
 
             if(isset($level['routes'])) {
                 foreach($level['routes'] as $route) {
-                    $levelModel->routes()->create($route);
+                    $levelModel->routes()->firstOrCreate($route);
                 }
             }
-
-            $role = Role::whereName('Admin')->first();
-            $role->levels()->attach($levelModel);
+            $ids[] = $levelModel->id;
         }
+
+        $role = Role::whereName('Admin')->first();
+        $role->levels()->sync($ids);
     }
 }

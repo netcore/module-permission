@@ -16,10 +16,7 @@ class AddRoleIdToUsersTable extends Migration
     {
         if (!Schema::hasColumn('users', 'role_id')) {
             Schema::table('users', function (Blueprint $table) {
-                $role = \Modules\Permission\Models\Role::whereName('User')->first();
-                $table->unsignedInteger('role_id')->after('is_admin')->default($role->id)->index();
-
-                $table->foreign('role_id')->references('id')->on('netcore_permission__roles')->onDelete('cascade');
+                $table->integer('role_id')->after('is_admin')->default(2)->index();
             });
         }
 

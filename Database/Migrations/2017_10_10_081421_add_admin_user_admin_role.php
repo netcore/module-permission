@@ -17,10 +17,12 @@ class AddAdminUserAdminRole extends Migration
         $userModel = config('auth.providers.users.model');
 
         $user = $userModel::whereIsAdmin(1)->first();
-        $role = \Modules\Permission\Models\Role::whereName('Admin')->first();
 
-        $user->role_id = $role->id;
-        $user->save();
+        if ($user) {
+            $user->role_id = 1;
+            $user->save();
+        }
+
     }
 
     /**
@@ -33,9 +35,10 @@ class AddAdminUserAdminRole extends Migration
         $userModel = config('auth.providers.users.model');
 
         $user = $userModel::whereIsAdmin(1)->first();
-        $role = \Modules\Permission\Models\Role::whereName('User')->first();
 
-        $user->role_id = $role->id;
-        $user->save();
+        if ($user) {
+            $user->role_id = 2;
+            $user->save();
+        }
     }
 }
