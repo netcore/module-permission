@@ -27,7 +27,7 @@ class LevelsTableSeederTableSeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'Write',
+                'name' => 'Create',
                 'routes' => [
                     ['route' => '*.create'],
                     ['route' => '*.store'],

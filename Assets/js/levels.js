@@ -13,9 +13,18 @@ $(function () {
     form.hide().removeClass('hidden').slideDown();
 
     var routeList = [];
-    console.log();
-    $.each(routes, function (index, value) {
-        routeList.push(value);
+    $.each(routes, function (group, values) {
+        var r = [];
+        $.each(values, function (index, value) {
+            r.push({
+                id: value,
+                text: value
+            });
+        });
+        routeList.push({
+            text: group,
+            children: r
+        });
     });
 
     $('.js-cancel-button').on('click', function (e) {

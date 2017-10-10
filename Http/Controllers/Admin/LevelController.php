@@ -23,6 +23,7 @@ class LevelController extends Controller
 
         $routes = [];
         $routes['Route Groups'] = [
+            '*'            => '*',
             '*.index'      => '*.index',
             '*.pagination' => '*.pagination',
             '*.create'     => '*.create',
@@ -61,24 +62,6 @@ class LevelController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('permission::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-    }
-
-    /**
      * Modify the specified resource in storage.
      * @param LevelRequest $request
      * @return array
@@ -112,10 +95,10 @@ class LevelController extends Controller
 
         $levels = Level::with('routes')->get();
         $response += [
-            'data'    => $level,
-            'routes'  => $level->routes()->where('route', '!=', null)->pluck('route')->toArray(),
-            'urls'    => $level->routes()->where('uri', '!=', null)->pluck('uri')->toArray(),
-            'message' => 'Level has been successfully updated!',
+            'data'      => $level,
+            'routes'    => $level->routes()->where('route', '!=', null)->pluck('route')->toArray(),
+            'urls'      => $level->routes()->where('uri', '!=', null)->pluck('uri')->toArray(),
+            'message'   => 'Level has been successfully updated!',
             'allLevels' => $levels->toJson()
         ];
 

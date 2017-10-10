@@ -17,8 +17,7 @@ Route::group([
     Route::resource('levels', 'LevelController', [
         'only' => [
             'index',
-            'destroy',
-            'store'
+            'destroy'
         ]
     ]);
 
@@ -33,14 +32,17 @@ Route::group([
     ]);
 
     Route::post('routes/update', [
-            'uses' => 'LevelController@updateRoute',
-            'as'   => 'levels.route.update'
-        ]
-    );
+        'uses' => 'LevelController@updateRoute',
+        'as'   => 'levels.route.update'
+    ]);
 
     Route::post('levels/update', [
-            'uses' => 'LevelController@modify',
-            'as'   => 'levels.modify'
-        ]
-    );
+        'uses' => 'LevelController@modify',
+        'as'   => 'levels.modify'
+    ]);
+
+    Route::get('/access-denied', [
+        'uses' => 'PermissionController@index',
+        'as'   => 'access-denied'
+    ]);
 });
