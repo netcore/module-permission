@@ -9,6 +9,7 @@ use Modules\Permission\Models\Role;
 
 class LevelsTableSeederTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -20,40 +21,45 @@ class LevelsTableSeederTableSeeder extends Seeder
 
         $levels = [
             [
-                'name' => 'Read',
+                'name'   => 'Read',
                 'routes' => [
                     ['route' => '*.index'],
                     ['route' => '*.pagination'],
                 ]
             ],
             [
-                'name' => 'Create',
+                'name'   => 'Create',
                 'routes' => [
                     ['route' => '*.create'],
                     ['route' => '*.store'],
                 ]
             ],
             [
-                'name' => 'Edit',
+                'name'   => 'Edit',
                 'routes' => [
                     ['route' => '*.edit'],
                     ['route' => '*.update'],
                 ]
             ],
             [
-                'name' => 'Delete',
+                'name'   => 'Delete',
                 'routes' => [
                     ['route' => '*.destroy'],
                 ]
             ],
-            ['name' => 'Custom'],
+            [
+                'name'   => 'Custom',
+                'routes' => [
+                    ['route' => '*'],
+                ]
+            ],
         ];
         $ids = [];
-        foreach($levels as $level) {
+        foreach ($levels as $level) {
             $levelModel = Level::firstOrCreate(array_only($level, 'name'));
 
-            if(isset($level['routes'])) {
-                foreach($level['routes'] as $route) {
+            if (isset($level['routes'])) {
+                foreach ($level['routes'] as $route) {
                     $levelModel->routes()->firstOrCreate($route);
                 }
             }
