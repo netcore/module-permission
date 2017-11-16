@@ -60,14 +60,31 @@ class MenuTableSeeder extends Seeder
 
 
             foreach ($items as $item) {
-                $item['menu_id'] = $menu->id;
-                $parentItem = MenuItem::firstOrCreate(array_except($item, 'children'));
+                $row = $menu->items()->firstOrCreate(array_except($item, ['name', 'value', 'parameters', 'children']));
 
-                foreach($item['children'] as $child) {
-                    $child['parent_id'] = $parentItem->id;
+                $translations = [];
+                foreach (TransHelper::getAllLanguages() as $language) {
+                    $translations[$language->iso_code] = [
+                        'name'       => $item['name'],
+                        'value'      => $item['value'],
+                        'parameters' => $item['parameters']
+                    ];
+                }
+                $row->updateTranslations($translations);
+
+                foreach ($item['children'] as $child) {
                     $child['menu_id'] = $menu->id;
 
-                    MenuItem::firstOrCreate($child);
+                    $c = $row->children()->firstOrCreate(array_except($child, ['name', 'value', 'parameters']));
+                    $translations = [];
+                    foreach (TransHelper::getAllLanguages() as $language) {
+                        $translations[$language->iso_code] = [
+                            'name'       => $child['name'],
+                            'value'      => $child['value'],
+                            'parameters' => $child['parameters']
+                        ];
+                    }
+                    $c->updateTranslations($translations);
                 }
             }
         }
