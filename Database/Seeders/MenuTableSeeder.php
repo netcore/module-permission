@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Menu;
 use Modules\Admin\Models\MenuItem;
+use Netcore\Translator\Helpers\TransHelper;
 
 class MenuTableSeeder extends Seeder
 {
