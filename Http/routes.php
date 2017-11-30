@@ -40,9 +40,4 @@ Route::group([
         'uses' => 'LevelController@modify',
         'as'   => 'levels.modify'
     ]);
-
-    Route::get('/access-denied', [
-        'uses' => 'PermissionController@index',
-        'as'   => 'access-denied'
-    ]);
 });
