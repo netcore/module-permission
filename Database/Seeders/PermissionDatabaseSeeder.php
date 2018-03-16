@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PermissionDatabaseSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -17,7 +18,9 @@ class PermissionDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(MenuTableSeeder::class);
-        $this->call(RolesTableSeeder::class);
-        $this->call(LevelsTableSeederTableSeeder::class);
+        if (config('netcore.module-permission.seed_example_data', true)) {
+            $this->call(RolesTableSeeder::class);
+            $this->call(LevelsTableSeederTableSeeder::class);
+        }
     }
 }
