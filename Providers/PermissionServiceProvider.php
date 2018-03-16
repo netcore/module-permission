@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 class PermissionServiceProvider extends ServiceProvider
 {
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -45,11 +46,9 @@ class PermissionServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('permission.php'),
+            __DIR__ . '/../Config/config.php' => config_path('netcore/module-permission.php'),
         ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'permission'
-        );
+        $this->mergeConfigFrom(__DIR__ . '/../Config/config.php', 'permission');
     }
 
     /**
@@ -61,7 +60,7 @@ class PermissionServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/permission');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
@@ -84,7 +83,7 @@ class PermissionServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'permission');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'permission');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'permission');
         }
     }
 
@@ -94,7 +93,7 @@ class PermissionServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (! app()->environment('production')) {
+        if (!app()->environment('production')) {
             app(Factory::class)->load(__DIR__ . '/Database/factories');
         }
     }

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Permission'
+    'seed_example_data' => true
 ];
